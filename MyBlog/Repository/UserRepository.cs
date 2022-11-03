@@ -30,5 +30,16 @@ namespace MyBlog.Repository
             };
             return result;
         }
+        public async Task< List<UserDto>> GetUsers(){
+            return await _context.Users.AsNoTracking().Select(user=>new UserDto(){
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                Phone = user.Phone,
+                ID = user.Id,
+                DateOfBirth = user.DateOfBirth,
+                Address = user.Address,
+            }).ToListAsync();
+            
+        }
     }
 }
