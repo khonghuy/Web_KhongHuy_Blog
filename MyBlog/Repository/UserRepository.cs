@@ -29,6 +29,7 @@ namespace MyBlog.Repository
                 DateOfBirth = user.DateOfBirth,
             };
             return result;
+            hello;
         }
     }
 }
