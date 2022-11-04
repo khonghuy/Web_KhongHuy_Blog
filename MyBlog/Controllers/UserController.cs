@@ -53,5 +53,32 @@ namespace MyBlog.Controllers
             return Ok(listUser);
 
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser([FromQuery] Guid id)
+        {
+            return Ok(await _userRepository.DeleteUser(id));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutUser([FromQuery]Guid Id, PutUserDto PutUserDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var userNew = new User()
+                {
+                    DisplayName = PutUserDto.DisplayName,
+                    Email = PutUserDto.Email,
+                    Phone = PutUserDto.Phone,
+                    Address = PutUserDto.Address,
+                    DateOfBirth = PutUserDto.DateOfBirth
+                };
+                return Ok(await _userRepository.EditUser(Id, userNew));
+
+            }
+            else
+            {
+                return BadRequest(ModelState.ErrorCount);
+            }
+        }
     }
 }

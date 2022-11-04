@@ -31,7 +31,7 @@ namespace MyBlog.Repository
             return result;
         }
         public async Task< List<UserDto>> GetUsers(){
-            return await _context.Users.AsNoTracking().Select(user=>new UserDto(){
+            return await _appDbContext.Users.AsNoTracking().Select(user=>new UserDto(){
                 DisplayName = user.DisplayName,
                 Email = user.Email,
                 Phone = user.Phone,
@@ -42,19 +42,19 @@ namespace MyBlog.Repository
             
         }
         public async Task<bool> DeleteUser(Guid Id){
-            var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == Id);
+            var user = await _appDbContext.Users.FirstOrDefaultAsync(user => user.Id == Id);
             if(user == null){
                 return false;
                
             };
-             _context.Users.Remove(user);
-             await _context.SaveChangesAsync();
+             _appDbContext.Users.Remove(user);
+             await _appDbContext.SaveChangesAsync();
              return true;
         }   
 
         public async Task<UserDto>  EditUser (Guid Id, User user)
         {
-            var userExist = await _context.Users.FirstOrDefaultAsync(user => user.Id == Id);
+            var userExist = await _appDbContext.Users.FirstOrDefaultAsync(user => user.Id == Id);
             if(userExist == null){
                 return null;
             };
@@ -63,7 +63,7 @@ namespace MyBlog.Repository
             userExist.Phone = user.Phone;
             userExist.DateOfBirth = user.DateOfBirth;
             userExist.Address = user.Address;
-            await _context.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
 
             return new UserDto()
             {
