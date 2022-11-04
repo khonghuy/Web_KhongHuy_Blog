@@ -42,6 +42,16 @@ namespace MyBlog.Controllers
             {
                 return BadRequest();
             }
+            
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListUser()
+        {
+
+            var listUser = await _userRepository.GetListUser();
+
+            return Ok(listUser);
+
         }
     }
 }
